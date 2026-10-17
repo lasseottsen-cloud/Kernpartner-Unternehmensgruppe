@@ -1,1 +1,0 @@
-# Kernpartner-Unternehmensgruppe
