@@ -304,3 +304,50 @@ footer{position:relative;padding:80px var(--pad) 40px}
   .calc{padding:22px 20px}
   .rate{grid-template-columns:1fr;gap:8px;padding:18px 20px}
 }
+
+/* ---------- Baujahr-Check: Datenblatt (Wärme) ---------- */
+.cfg{display:grid;grid-template-columns:5fr 6fr;gap:clamp(28px,4vw,64px);align-items:start}
+.cfg-in{display:flex;flex-direction:column;gap:26px}
+.seg{border:0;margin:0;padding:0;min-width:0;display:flex;flex-wrap:wrap;gap:8px}
+.seg[hidden]{display:none}
+.seg legend{float:left;width:100%;font-size:17px;font-weight:600;padding:0;margin-bottom:10px}
+.seg label{position:relative;display:inline-flex;cursor:pointer}
+.seg input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.seg span{display:inline-flex;align-items:center;min-height:52px;padding:0 18px;background:#fff;border:1px solid #9A978F;font-size:17px;font-weight:500;line-height:1.25}
+.seg label:hover span{border-color:var(--tinte)}
+.seg input:checked+span{background:var(--tinte);border-color:var(--tinte);color:var(--kalk)}
+.seg input:focus-visible+span{outline:3px solid var(--focus);outline-offset:2px}
+.seg input:disabled{cursor:not-allowed}
+.seg input:disabled+span{opacity:.4}
+.tick{display:flex;gap:12px;align-items:center;font-size:17px;font-weight:500;cursor:pointer;min-height:44px}
+.tick input{width:24px;height:24px;margin:0;accent-color:var(--tinte);flex:none}
+.tick.off{opacity:.4}
+.spec{background:#151517;color:var(--kalk);padding:clamp(24px,3vw,40px);display:flex;flex-direction:column;gap:24px;position:sticky;top:104px}
+.spec-h{display:flex;flex-direction:column;gap:10px}
+.spec-h .eb{color:var(--beton)}
+.spec .m{font-family:'Kernschrift Fuge',sans-serif;font-weight:700;font-size:clamp(46px,5.4vw,80px);line-height:.98}
+.spec .era{font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--acc-l)}
+.spec .k{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--beton)}
+.spec ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.spec li{position:relative;padding-left:24px;line-height:1.45;color:#E2DFD8}
+.spec li:before{content:'';position:absolute;left:0;top:.68em;width:12px;height:3px;background:var(--acc-l)}
+.spec .rows{display:flex;flex-direction:column}
+.spec .r{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:13px 0;border-top:1px solid var(--dlinie)}
+.spec .r small{display:block;font-size:14px;line-height:1.4;color:var(--beton);margin-top:2px}
+.spec .r b{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:19px;white-space:nowrap}
+.spec .r.sum{border-top:2px solid var(--kalk);padding-top:16px}
+.spec .r.sum span{font-weight:600}
+.spec .r.sum b{font-family:'IBM Plex Sans',sans-serif;font-weight:700;font-size:clamp(26px,2.6vw,34px);color:var(--acc-l)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:'IBM Plex Mono',monospace;font-size:14px;padding:6px 10px;border:1px solid #3A3936;color:#E2DFD8}
+.chips span.on{border-color:var(--acc-l);color:var(--kalk)}
+.chips span.off{color:#77756F;text-decoration:line-through}
+.spec .why{margin:0;color:#E2DFD8}
+.spec .why:empty{display:none}
+.spec .clock{margin:0;background:var(--ochs);color:var(--kalk);padding:14px 18px;font-weight:600;font-size:17px;line-height:1.4}
+.spec .btn.ghost{color:var(--kalk)}
+.spec .note{color:var(--beton)}
+.cfg .err:empty{display:none}
+.cfg .err{color:var(--ochs)}
+@media (max-width:960px){.cfg{grid-template-columns:1fr}.spec{position:static}}
+@media (max-width:640px){.seg span{padding:0 14px;font-size:16px}.spec .r{flex-wrap:wrap}.spec .r b{margin-left:auto}}
