@@ -192,7 +192,11 @@ form.sent .hide-sent{display:none}
 .err{color:#F0A898;font-size:16px;min-height:0}
 
 /* Förderung */
-.pct{font-family:'Kernschrift Fuge',sans-serif;font-weight:700;font-size:clamp(44px,4vw,52px);line-height:1;color:var(--acc-t)}
+.pct{font-family:'Kernschrift Fuge',sans-serif;font-weight:700;font-size:clamp(36px,3.4vw,48px);line-height:1;color:var(--acc-t);white-space:nowrap}
+.rates{display:flex;flex-direction:column;gap:10px}
+.rate{display:grid;grid-template-columns:190px 1fr;gap:20px;align-items:center;background:#fff;padding:18px 24px}
+.rate b{display:block;font-size:18px;margin-bottom:2px}
+.rate .small{display:block}
 .calc{background:#fff;padding:30px 32px;display:flex;flex-direction:column}
 .calc .r{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;border-top:1px solid var(--linie)}
 .calc .r b{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:20px;white-space:nowrap}
@@ -298,4 +302,5 @@ footer{position:relative;padding:80px var(--pad) 40px}
   .jobs div{align-items:flex-start;flex-direction:column;gap:8px}
   .card .bd{padding:24px 22px 28px}
   .calc{padding:22px 20px}
+  .rate{grid-template-columns:1fr;gap:8px;padding:18px 20px}
 }
