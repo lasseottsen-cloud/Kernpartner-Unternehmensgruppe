@@ -1,0 +1,245 @@
+/* Kernpartner · Website-Intro für Gruppe, Wärme und Farbe (Stand 18.10.2026)
+   intro.js baut die Ebene .kpo, schaltet die Phasen p1, p2 … und landet auf der echten Bühne.
+   Läuft einmal pro Besuch. Mit ?intro=1 nochmal, mit ?intro=0 nie. Bei „Bewegung reduzieren“ nie. */
+
+html.kpo-on,html.kpo-run,html.kpo-on body,html.kpo-run body{overflow:hidden}
+html.kpo-on::after{content:"";position:fixed;inset:0;z-index:1000;background:#0D0D0E}
+html.kpo-on.kpo-hell::after{background:#F2F0EC}
+
+.kpo{position:fixed;inset:0;z-index:1001;overflow:hidden;background-color:#0D0D0E;color:#F2F0EC;pointer-events:none;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;transition:opacity .3s ease}
+.kpo.fa{background-color:#F2F0EC;color:#141414}
+.kpo *{box-sizing:border-box}
+.kpo.gone{opacity:0}
+.kpo-stage{position:absolute;left:0;top:0;width:1440px;height:900px;transform-origin:0 0}
+.kpo.m .kpo-stage{width:390px;height:844px}
+.kpo-shake{position:absolute;inset:0}
+.kpo-skip{position:absolute;top:16px;right:16px;z-index:5;pointer-events:auto;min-height:44px;padding:0 18px;border:0;border-radius:0;background:rgba(13,13,14,.55);color:#F2F0EC;box-shadow:inset 0 0 0 1.5px #8A877F;font:500 16px/1 'IBM Plex Sans',sans-serif;cursor:pointer;transition:opacity .3s ease}
+.kpo.fa .kpo-skip{background:#F2F0EC;color:#141414;box-shadow:inset 0 0 0 1.5px #55534E}
+.kpo-skip:focus-visible{outline:3px solid #0B6BD3;outline-offset:2px}
+.kpo.leave .kpo-skip{opacity:0;pointer-events:none}
+
+@keyframes kpo-shake{0%{transform:translate(0,0)}10%{transform:translate(-10px,6px)}24%{transform:translate(9px,-7px)}38%{transform:translate(-7px,4px)}52%{transform:translate(5px,-3px)}68%{transform:translate(-3px,2px)}84%{transform:translate(1px,-1px)}100%{transform:translate(0,0)}}
+
+/* Elemente, die auf der echten Bühne landen: Ursprung oben links, Lage kommt aus intro.js */
+.kpo .fx{position:absolute;left:0;top:0;transform-origin:0 0;white-space:nowrap}
+
+/* =========================================================
+   01 · Fünf Orte mit Fuge-Schnitt  (kernpartner.de)
+   Schriftzug schlägt ein, Messinglinie schneidet an der Fuge, Linie zieht sich zum Kern,
+   k e r n p fliegen zu ihren Orten, Zoom durch den Kern, Rolltor in Messing
+   ========================================================= */
+.kpo.gr.p1:not(.p2) .kpo-shake{animation:kpo-shake .562s ease-out .4s}
+.kpo.gr.p3:not(.p4) .kpo-shake{animation:kpo-shake .5s ease-out .062s}
+.kpo.gr.p9{background-color:rgba(13,13,14,0)}
+.kpo.gr.p9 .kpo-stage{visibility:hidden}
+
+.kpo.gr .word{position:absolute;inset:0;transform:scale(2.7);transform-origin:720px 433px;opacity:0}
+.kpo.gr.p1 .word{transform:none;opacity:1;transition:transform .425s cubic-bezier(.55,0,1,.45),opacity .15s linear}
+
+/* Jeder Buchstabe liegt zweimal da: obere und untere Hälfte, getrennt genau an der Fuge (y 450) */
+.kpo.gr .ltr{position:absolute;top:347.56px;font:700 150px/1 'Kernschrift Fuge',sans-serif;color:#F2F0EC;transform-origin:50% 85.5px}
+.kpo.gr .ltr.t{clip-path:inset(-30px -30px 47.56px -30px)}
+.kpo.gr .ltr.b{clip-path:inset(102.44px -30px -40px -30px)}
+.kpo.gr .L0{left:280.65px}.kpo.gr .L1{left:363.45px}.kpo.gr .L2{left:454.95px}.kpo.gr .L3{left:511.2px}.kpo.gr .L4{left:607.05px}
+.kpo.gr .L5{left:706.65px}.kpo.gr .L6{left:798.3px}.kpo.gr .L7{left:854.55px}.kpo.gr .L8{left:912.3px}.kpo.gr .L9{left:1008.15px}.kpo.gr .L10{left:1103.1px}
+
+/* Die Messinglinie schießt durch die Fuge */
+.kpo.gr .cut1{position:absolute;left:0;top:448.5px;width:1440px;height:3px;z-index:11;background:#C9A563;transform:scaleX(0);transform-origin:0 50%;pointer-events:none}
+.kpo.gr.p2 .cut1{transform:none;transition:transform .5s cubic-bezier(.6,0,.2,1)}
+/* Schnitt: der Schriftzug bricht an der Fuge auf */
+.kpo.gr.p3 .ltr.t{transform:translateY(-18px);transition:transform .375s cubic-bezier(.3,1.5,.5,1)}
+.kpo.gr.p3 .ltr.b{transform:translateY(18px);transition:transform .375s cubic-bezier(.3,1.5,.5,1)}
+/* Die Linie zieht sich zum Kern zusammen, zugleich fliegen k e r n p zu ihren Orten, „artner“ fällt in Stücken */
+.kpo.gr.p4 .cut1{transform-origin:698.9px 50%;transform:translateY(-8.6px) scale(.02,6);transition:transform .562s cubic-bezier(.6,0,.4,1)}
+.kpo.gr.p5 .cut1{opacity:0;transition:opacity .15s linear}
+.kpo.gr.p4 .ltr.x{transition:transform .812s cubic-bezier(.55,0,1,.45)}
+.kpo.gr.p4 .ltr.x.t.L5{transform:translateY(600px) rotate(-18deg)}
+.kpo.gr.p4 .ltr.x.b.L5{transform:translateY(660px) rotate(14deg);transition-delay:.037s}
+.kpo.gr.p4 .ltr.x.t.L6{transform:translateY(600px) rotate(12deg);transition-delay:.062s}
+.kpo.gr.p4 .ltr.x.b.L6{transform:translateY(660px) rotate(-10deg);transition-delay:.1s}
+.kpo.gr.p4 .ltr.x.t.L7{transform:translateY(600px) rotate(-9deg);transition-delay:.125s}
+.kpo.gr.p4 .ltr.x.b.L7{transform:translateY(660px) rotate(16deg);transition-delay:.163s}
+.kpo.gr.p4 .ltr.x.t.L8{transform:translateY(600px) rotate(17deg);transition-delay:.188s}
+.kpo.gr.p4 .ltr.x.b.L8{transform:translateY(660px) rotate(-12deg);transition-delay:.225s}
+.kpo.gr.p4 .ltr.x.t.L9{transform:translateY(600px) rotate(-13deg);transition-delay:.25s}
+.kpo.gr.p4 .ltr.x.b.L9{transform:translateY(660px) rotate(9deg);transition-delay:.288s}
+.kpo.gr.p4 .ltr.x.t.L10{transform:translateY(600px) rotate(10deg);transition-delay:.312s}
+.kpo.gr.p4 .ltr.x.b.L10{transform:translateY(660px) rotate(-15deg);transition-delay:.35s}
+/* k e r n p fliegen zu ihren Orten, die Hälften schließen sich im Flug */
+.kpo.gr.p4 .ltr.fly{opacity:0;transition:transform .75s cubic-bezier(.65,0,.25,1),opacity .2s linear}
+.kpo.gr.p4 .ltr.fly.L0{transform:translate(455.35px,-52.26px) scale(.9);transition-delay:0s,.625s}
+.kpo.gr.p4 .ltr.fly.L1{transform:translate(185.7px,-213.86px) scale(.9);transition-delay:.05s,.675s}
+.kpo.gr.p4 .ltr.fly.L2{transform:translate(-2.5px,-30.56px) scale(.9);transition-delay:.1s,.725s}
+.kpo.gr.p4 .ltr.fly.L3{transform:translate(123.2px,217.74px) scale(.9);transition-delay:.15s,.775s}
+.kpo.gr.p4 .ltr.fly.L4{transform:translate(302.55px,120.54px) scale(.9);transition-delay:.2s,.825s}
+
+.kpo.gr .kform{position:absolute;left:436.4px;top:175px;width:567.2px;height:520px;transform-origin:262.5px 266.4px}
+.kpo.gr .kform svg{display:block;width:100%;height:100%;overflow:visible}
+.kpo.gr .ring{fill:none;stroke:#F2F0EC;stroke-width:115;stroke-linejoin:round;stroke-dasharray:3570;stroke-dashoffset:3570;transition:stroke-dashoffset .625s cubic-bezier(.6,0,.3,1)}
+.kpo.gr.p6 .ring{stroke-dashoffset:0}
+.kpo.gr .dot{fill:#F2F0EC;transform:scale(0);transform-box:fill-box;transform-origin:center;transition:transform .425s cubic-bezier(.3,1.7,.5,1)}
+.kpo.gr.p4 .dot{transform:scale(1)}
+.kpo.gr.p4 .dK{transition-delay:.625s}.kpo.gr.p4 .dE{transition-delay:.675s}.kpo.gr.p4 .dR{transition-delay:.725s}.kpo.gr.p4 .dN{transition-delay:.775s}.kpo.gr.p4 .dP{transition-delay:.825s}
+.kpo.gr .rip{fill:none;stroke:#F2F0EC;stroke-width:16;opacity:0;transform-box:fill-box;transform-origin:center}
+.kpo.gr.p4:not(.p6) .rip{animation:kpo-rip 1s cubic-bezier(.2,.7,.2,1) both}
+.kpo.gr.p4:not(.p6) .rK{animation-delay:.65s}.kpo.gr.p4:not(.p6) .rE{animation-delay:.7s}.kpo.gr.p4:not(.p6) .rR{animation-delay:.75s}.kpo.gr.p4:not(.p6) .rN{animation-delay:.8s}.kpo.gr.p4:not(.p6) .rP{animation-delay:.85s}
+@keyframes kpo-rip{0%{opacity:0;transform:scale(1)}10%{opacity:.85}100%{opacity:0;transform:scale(3.4)}}
+/* Der Kern entsteht aus der Linie und zündet später */
+.kpo.gr .core{fill:#C9A563;transform:scale(0);transform-box:fill-box;transform-origin:center;transition:transform .5s cubic-bezier(.3,1.7,.5,1)}
+.kpo.gr.p5 .core{transform:scale(1)}
+.kpo.gr .pulse{fill:none;stroke:#C9A563;stroke-width:16;opacity:0;transform-box:fill-box;transform-origin:center}
+.kpo.gr.p5:not(.p6) .u1{animation:kpo-pulse 1s cubic-bezier(.2,.7,.2,1) .125s both}
+.kpo.gr.p7:not(.p8) .pulse{animation:kpo-pulse 1.125s cubic-bezier(.2,.7,.2,1) both}
+.kpo.gr.p7:not(.p8) .u1{animation-delay:0s}.kpo.gr.p7:not(.p8) .u2{animation-delay:.175s}.kpo.gr.p7:not(.p8) .u3{animation-delay:.35s}
+@keyframes kpo-pulse{0%{opacity:0;transform:scale(1)}10%{opacity:.95}100%{opacity:0;transform:scale(4.2)}}
+/* Zoom durch den Kern: Messing füllt das Bild */
+.kpo.gr.p8 .kform{transform:scale(30);transition:transform .688s cubic-bezier(.7,0,.85,.25)}
+.kpo.gr.p9 .kform{opacity:0}
+
+.kpo.gr .ort{position:absolute;font:400 30px/1 'Kernschrift Fuge',sans-serif;color:#E2DFD8;white-space:nowrap;opacity:0;transition:opacity .5s ease}
+.kpo.gr.p4 .ort{opacity:1;transition-delay:.775s}
+.kpo.gr.p8 .ort{opacity:0;transition-duration:.188s;transition-delay:0s}
+.kpo.gr .oE{left:507.15px;top:125px}.kpo.gr .oK{left:841.6px;top:362px}.kpo.gr .oP{left:1023.6px;top:538.6px}.kpo.gr .oN{left:595.06px;top:713px}.kpo.gr .oR{left:259.98px;top:387.5px}
+
+/* ---------- 01 am Handy ---------- */
+.kpo.gr.m .word{transform-origin:195px 394px}
+.kpo.gr.m .ltr{top:361.76px;font-size:56px;transform-origin:50% 31.92px}
+.kpo.gr.m .ltr.t{clip-path:inset(-12px -12px 17.76px -12px)}
+.kpo.gr.m .ltr.b{clip-path:inset(38.24px -12px -16px -12px)}
+.kpo.gr.m .L0{left:31px}.kpo.gr.m .L1{left:61.91px}.kpo.gr.m .L2{left:96.07px}.kpo.gr.m .L3{left:117.07px}.kpo.gr.m .L4{left:152.86px}
+.kpo.gr.m .L5{left:190.04px}.kpo.gr.m .L6{left:224.26px}.kpo.gr.m .L7{left:245.26px}.kpo.gr.m .L8{left:266.82px}.kpo.gr.m .L9{left:302.6px}.kpo.gr.m .L10{left:338.05px}
+.kpo.gr.m .cut1{top:398.5px;width:390px}
+.kpo.gr.m.p3 .ltr.t{transform:translateY(-9px)}
+.kpo.gr.m.p3 .ltr.b{transform:translateY(9px)}
+.kpo.gr.m.p4 .cut1{transform-origin:208.66px 50%;transform:scale(.06,5)}
+.kpo.gr.m.p4 .ltr.fly.L0{transform:translate(195.24px,-19.08px) scale(.9)}
+.kpo.gr.m.p4 .ltr.fly.L1{transform:translate(85.91px,-87.08px) scale(.9)}
+.kpo.gr.m.p4 .ltr.fly.L2{transform:translate(10.23px,-9.98px) scale(.9)}
+.kpo.gr.m.p4 .ltr.fly.L3{transform:translate(66.74px,94.52px) scale(.9)}
+.kpo.gr.m.p4 .ltr.fly.L4{transform:translate(146.85px,53.62px) scale(.9)}
+.kpo.gr.m .kform{left:98.2px;top:288px;width:238.7px;height:218.8px;transform-origin:110.46px 112.08px}
+.kpo.gr.m.p8 .kform{transform:scale(34)}
+.kpo.gr.m .ort{font-size:15px}
+.kpo.gr.m .oE{left:121px;top:266px}.kpo.gr.m .oK{left:267.3px;top:367px}.kpo.gr.m .oP{left:343.9px;top:439.8px}.kpo.gr.m .oN{left:158.1px;top:512.8px}.kpo.gr.m .oR{left:13px;top:376.2px}
+
+
+/* Rolltor: die Messingfläche liegt über dem ganzen Bildschirm und fährt nach unten weg */
+.kpo-curtain{position:absolute;inset:0;background:#C9A563;opacity:0;transform-origin:50% 100%}
+.kpo.gr.p9 .kpo-curtain{opacity:1}
+.kpo.gr.p10 .kpo-curtain{transform:scaleY(0);transition:transform .938s cubic-bezier(.75,0,.2,1)}
+
+/* =========================================================
+   Wärme · Modell 1964.
+   Satz baut sich auf, „Modell 2026.“ schlägt ein, Zählwerk rollt zurück, Licht an, Landung auf der Bühne
+   ========================================================= */
+.kpo.wa .pre{font:400 30px/1.12 'Kernschrift Fuge',sans-serif;color:#E2DFD8;transform:translate(var(--x0),var(--y0)) scale(var(--k0))}
+.kpo.wa.m .pre{font-size:26px}
+.kpo.wa .pre .w{display:inline-block;opacity:0;transform:translateY(.45em);transition:opacity .3s ease,transform .42s cubic-bezier(.2,.7,.2,1)}
+.kpo.wa.p1 .pre .w{opacity:1;transform:none}
+.kpo.wa .pre .w:nth-of-type(2){transition-delay:.09s}.kpo.wa .pre .w:nth-of-type(3){transition-delay:.18s}.kpo.wa .pre .w:nth-of-type(4){transition-delay:.27s}
+.kpo.wa .pre .w:nth-of-type(5){transition-delay:.36s}.kpo.wa .pre .w:nth-of-type(6){transition-delay:.58s}.kpo.wa .pre .w:nth-of-type(7){transition-delay:.67s}.kpo.wa .pre .w:nth-of-type(8){transition-delay:.76s}
+
+.kpo.wa .h1,.kpo.wa .mw,.kpo.wa .yr,.kpo.wa .subh{opacity:0;transform:translate(var(--xs),var(--ys)) scale(var(--ks))}
+.kpo.wa .h1,.kpo.wa .mw,.kpo.wa .yr{font:700 88px/.98 'Kernschrift Fuge',sans-serif;color:#F2F0EC}
+.kpo.wa.m .mw,.kpo.wa.m .yr{font-size:46px}
+.kpo.wa.p2 .h1,.kpo.wa.p2 .mw,.kpo.wa.p2 .yr{opacity:1;transform:translate(var(--x0),var(--y0)) scale(var(--k0));transition:transform .28s cubic-bezier(.55,0,1,.45),opacity .1s linear}
+.kpo.wa.p2 .yr{transition-delay:.05s}
+.kpo.wa .subh{font:700 40px/1.08 'Kernschrift Fuge',sans-serif;color:#C2533F}
+.kpo.wa.m .subh{font-size:28px}
+.kpo.wa.p4 .subh{opacity:1;transform:translate(var(--x0),var(--y0)) scale(var(--k0));transition:transform .26s cubic-bezier(.55,0,1,.45) .08s,opacity .1s linear .08s}
+.kpo.wa.p2:not(.p3) .kpo-shake{animation:kpo-shake .45s ease-out .22s}
+.kpo.wa.p4:not(.p5) .kpo-shake{animation:kpo-shake .45s ease-out}
+
+/* Zählwerk: Spalten und Ziffernstreifen baut intro.js für das jeweilige Baujahr */
+.kpo .odo{display:inline-block;vertical-align:top;height:.98em;white-space:nowrap;transform-origin:50% 50%}
+.kpo .col{display:inline-block;height:.98em;vertical-align:top;text-align:center;clip-path:inset(0 -.3em);width:var(--w0)}
+.kpo .strip{display:block}
+.kpo .strip span{display:block;height:.98em;line-height:.98em}
+.kpo.wa.p3 .col{width:var(--w1);transition:width var(--d) cubic-bezier(.15,.6,.1,1) var(--dl)}
+.kpo.wa.p3 .strip{transform:translateY(calc(var(--n) * -.98em));transition:transform var(--d) cubic-bezier(.15,.6,.1,1) var(--dl)}
+.kpo.wa.p3:not(.p4) .col{animation:kpo-blur 1.3s ease-out both}
+@keyframes kpo-blur{0%{filter:blur(0)}12%{filter:blur(7px)}60%{filter:blur(3px)}100%{filter:blur(0)}}
+.kpo.wa.p4:not(.p5) .odo{animation:kpo-punch .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes kpo-punch{0%{transform:scale(1.16)}100%{transform:scale(1)}}
+
+/* Fuge-Streifen im Intro: läuft über die ganze Breite des Bildschirms */
+.kpo.wa .str{position:absolute;display:flex;flex-direction:column}
+.kpo.wa .str i{display:block;transform:scaleX(0);transform-origin:0 50%}
+.kpo.wa .str .l{height:2px;background:#F2F0EC}.kpo.wa .str .f{height:5px}.kpo.wa .str .b{height:16px;background:#C2533F}
+.kpo.wa.m .str .b{height:12px}
+.kpo.wa.p4 .str i{transform:none;transition:transform .42s cubic-bezier(.6,0,.2,1) .2s}
+.kpo.wa.p4 .str .b{transition-delay:.3s}
+.kpo.wa.p7 .str{opacity:0;transition:opacity .4s ease}
+
+/* Licht an: erst dunkel im Vollbild, dann klack */
+.kpo-foto{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;opacity:0}
+.kpo-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none}
+.kpo.wa .kpo-foto img{object-position:center 60%;filter:brightness(.1) saturate(.4);transform:scale(1.1)}
+.kpo.wa .kpo-foto .scrim{position:absolute;inset:0;background:rgba(13,13,14,.6)}
+.kpo.wa.p5 .kpo-foto{opacity:1;transition:opacity .3s ease}
+.kpo.wa.p6 .kpo-foto img{filter:brightness(1) saturate(1);transform:scale(1.02);transition:filter .18s cubic-bezier(.2,1,.3,1),transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.kpo.wa.p7 .kpo-foto img{transform:none;transition:transform .75s cubic-bezier(.7,0,.2,1)}
+.kpo.wa.p7 .kpo-foto .scrim{opacity:0;transition:opacity .5s ease}
+.kpo.wa.p7{background-color:rgba(13,13,14,0);transition:background-color .5s ease .15s}
+.kpo.wa.m.p7 .kpo-stage{opacity:0;transition:opacity .45s ease}
+
+/* =========================================================
+   Farbe · Modellreihe
+   Die Häuser rauschen heran, Modell 1931 bleibt stehen, die Zeichnung fliegt aufs Foto,
+   die Tür wird Grünspan, dann wird das Haus Bahn für Bahn zum echten Foto gestrichen
+   ========================================================= */
+.kpo.fa.p3:not(.p4) .kpo-shake{animation:kpo-shake .45s ease-out .26s}
+.kpo.fa .strasse{position:absolute;top:700px;height:23px;display:flex;flex-direction:column;transition:opacity .4s ease}
+.kpo.fa.m .strasse{top:560px;height:19px}
+.kpo.fa .strasse i{display:block;transform:scaleX(0);transform-origin:0 50%}
+.kpo.fa .strasse .l{height:2px;background:#141414}.kpo.fa .strasse .f{height:5px}.kpo.fa .strasse .b{height:16px;background:#4E8572}
+.kpo.fa.m .strasse .b{height:12px}
+.kpo.fa.p1 .strasse i{transform:none;transition:transform .5s cubic-bezier(.6,0,.2,1)}
+.kpo.fa.p1 .strasse .b{transition-delay:.08s}
+.kpo.fa.p4 .strasse{opacity:0}
+
+.kpo.fa .reihe{position:absolute;left:0;top:0;width:1440px;height:900px;transform:translateX(1900px);filter:blur(9px)}
+.kpo.fa.m .reihe{transform-origin:0 0;transform:translate(1400px,126px) scale(.62)}
+.kpo.fa .reihe svg{display:block;width:1440px;height:900px;overflow:visible}
+.kpo.fa.p2 .reihe{transform:none;filter:blur(0);transition:transform 1.2s cubic-bezier(.12,.78,.16,1),filter .9s ease-out .1s}
+.kpo.fa.m.p2 .reihe{transform:translate(-251.4px,126px) scale(.62)}
+.kpo.fa .reihe *{vector-effect:non-scaling-stroke}
+.kpo.fa .hs path,.kpo.fa .hs rect,.kpo.fa .h31 path,.kpo.fa .h31 rect{fill:none;stroke:#141414;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.kpo.fa .hs .fein,.kpo.fa .h31 .fein{stroke-width:1.5}
+.kpo.fa .lbl{font:400 16px/1 'IBM Plex Mono',monospace;fill:#55534E;text-anchor:middle;transition:opacity .35s ease}
+.kpo.fa .lc{fill:#141414}
+.kpo.fa .hs{transition:transform .6s cubic-bezier(.6,0,.4,1),opacity .45s ease}
+.kpo.fa.p3 .hs.li{transform:translateX(-760px);opacity:0}
+.kpo.fa.p3 .hs.re{transform:translateX(760px);opacity:0}
+.kpo.fa.p3 .lbl:not(.lc){opacity:0}
+.kpo.fa.p4 .lbl{opacity:0}
+
+/* Modell 1931: erst in der Reihe, dann genau auf dem Foto (Ziel rechnet intro.js aus) */
+.kpo.fa .h31{transform:translate(533px,368.35px) scale(.55);transition:transform .85s cubic-bezier(.7,0,.2,1),opacity .9s ease}
+.kpo.fa.p4 .h31{transform:translate(var(--hx),var(--hy)) scale(var(--hk))}
+.kpo.fa .h31 .tuer{fill:#4E8572;stroke:none;transform:scaleY(0);transform-box:fill-box;transform-origin:50% 100%}
+.kpo.fa.p5 .h31 .tuer{transform:none;transition:transform .45s cubic-bezier(.6,0,.2,1)}
+.kpo.fa.p6 .h31{opacity:0;transition:opacity 1s ease .4s}
+
+/* „Modell 1931.“ schlägt ein */
+.kpo.fa .h1{font:700 88px/.98 'Kernschrift Fuge',sans-serif;color:#141414;opacity:0;transform:translate(var(--xs),var(--ys)) scale(var(--ks))}
+.kpo.fa.m .h1{font-size:46px}
+.kpo.fa.p3 .h1{opacity:1;transform:translate(var(--x0),var(--y0)) scale(var(--k0));transition:transform .28s cubic-bezier(.55,0,1,.45),opacity .1s linear}
+
+/* Am Rechner wird die Seite schon beim Anflug sichtbar, am Handy erst zum Schluss */
+.kpo.fa.p4:not(.m){background-color:rgba(242,240,236,0);transition:background-color .6s ease .2s}
+.kpo.fa.m.p7{background-color:rgba(242,240,236,0);transition:background-color .5s ease .1s}
+
+/* Der Rahmen auf dem Foto: fünf Bahnen, die nacheinander gestrichen werden */
+.kpo-frame{position:absolute;overflow:hidden;background:#F2F0EC}
+.kpo-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none}
+.kpo-frame .pr{position:absolute;left:0;width:calc(100% + 12px);height:20.2%;background:#F2F0EC}
+.kpo-frame .pr.lr{border-left:12px solid #4E8572;transform:translateX(-12px)}
+.kpo-frame .pr.rl{left:auto;right:0;border-right:12px solid #4E8572;transform:translateX(12px)}
+.kpo-frame .pr1{top:0}.kpo-frame .pr2{top:20%}.kpo-frame .pr3{top:40%}.kpo-frame .pr4{top:60%}.kpo-frame .pr5{top:80%}
+.kpo.fa.p6 .pr{transition:transform .5s cubic-bezier(.55,0,.45,1)}
+.kpo.fa.p6 .pr.lr{transform:translateX(100%)}
+.kpo.fa.p6 .pr.rl{transform:translateX(-100%)}
+.kpo.fa.p6 .pr2{transition-delay:.14s}.kpo.fa.p6 .pr3{transition-delay:.28s}.kpo.fa.p6 .pr4{transition-delay:.42s}.kpo.fa.p6 .pr5{transition-delay:.56s}
+
+@media (prefers-reduced-motion: reduce){.kpo{display:none}}
