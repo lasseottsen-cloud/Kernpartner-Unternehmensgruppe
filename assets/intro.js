@@ -161,7 +161,7 @@
       }]], 6700);
   }
 
-  // ---------- Wärme: Modell 1964. ----------
+  // ---------- Wärme: Modell 1958. ----------
   var DW = [0.686, 0.524, 0.659, 0.561, 0.632, 0.588, 0.570, 0.629, 0.558, 0.570];
   var waEls = {};
   function odometer(start, target) {
@@ -179,7 +179,7 @@
     return { html: '<span class="odo">' + out + '</span>', shrink: shrink };
   }
   function buildWaerme() {
-    var target = +(bj || ((q('.h1') && (q('.h1').textContent.match(/\d{4}/) || [])[0]) || 1964));
+    var target = +(bj || ((q('.h1') && (q('.h1').textContent.match(/\d{4}/) || [])[0]) || 1958));
     var start = Math.max(thisYear, target + 1);
     var od = odometer(start, target);
     var words = ['Ihr', 'Haus', 'ist', 'kein', 'Altbau.'].map(function (w) { return '<span class="w">' + w + '</span>'; }).join(' ') +
