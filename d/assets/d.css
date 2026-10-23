@@ -1,0 +1,89 @@
+/* Kernpartner · Variante D · minimal und edel. Baut auf C (Bild im Ganzen) und B auf:
+   mehr Luft, größere Schrift, weniger Elemente, Formulare auf Linien statt in Kästen, Spartenfarbe nur als Akzent. */
+@import url('../../c/assets/c.css');
+
+:root{--sec:clamp(88px,11vw,160px);--pad:clamp(20px,6vw,96px)}
+body{line-height:1.6}
+.h2{font-size:clamp(40px,5.2vw,76px);letter-spacing:-.02em;line-height:1}
+.h3{font-size:clamp(24px,2.4vw,34px)}
+.lead{font-size:clamp(20px,1.7vw,24px);line-height:1.5;max-width:640px}
+.head{margin-bottom:64px;max-width:980px;gap:20px}
+.eb{display:none}
+.note,.ki-note,.hinweis{font-size:15px}
+.wrap{max-width:1320px;margin:0 auto}
+
+/* Bühne: noch weniger */
+.hero{min-height:min(1000px,calc(100vh - 84px))}
+.hero-txt{gap:24px;padding-bottom:112px;max-width:960px}
+.hero .h1{font-size:clamp(60px,8vw,132px)}
+.hero .subh{font-size:clamp(30px,4vw,60px)}
+.hero .h1.s{font-size:clamp(44px,5.6vw,84px)}
+.hero .lead{max-width:560px}
+.hero .btns{margin-top:12px}
+
+/* Navigation: nur das Nötige */
+.nav{height:92px}
+.nav .links{gap:34px}
+.nav .links .btn{min-height:48px}
+
+/* Große Listen statt Kacheln */
+.big{display:flex;flex-direction:column}
+.big>div{display:flex;align-items:baseline;gap:28px;padding:24px 0;border-top:1px solid var(--linie);font-weight:800;font-stretch:108%;letter-spacing:-.015em;font-size:clamp(26px,3vw,44px);line-height:1.1}
+.big>div:last-child{border-bottom:1px solid var(--linie)}
+.big .n{flex:0 0 2ch;color:var(--acc);font-variant-numeric:tabular-nums}
+.big small{display:block;font-weight:400;font-stretch:100%;letter-spacing:0;font-size:18px;line-height:1.5;color:var(--muted);margin-top:6px}
+.big b{font-weight:800}
+.big .rest{display:flex;flex-direction:column}
+
+/* Eine große Zahl */
+.zahl-gross{font-weight:800;font-stretch:104%;letter-spacing:-.03em;font-size:clamp(96px,13vw,200px);line-height:.9;color:var(--acc);font-variant-numeric:tabular-nums}
+
+/* Formulare und Datenblatt: Linien statt Kästen */
+.form,.cfg-in{background:transparent;padding:0;gap:24px}
+.inp{border:0;border-bottom:1.5px solid var(--rand);background:transparent;padding:12px 0;font-size:20px;min-height:52px}
+select.inp{background-color:transparent;background-position:right 0 center;padding-right:36px}
+.t-gruppe select.inp{background-color:transparent}
+.inp:focus-visible{outline:0;border-bottom-color:var(--acc);box-shadow:0 1.5px 0 var(--acc)}
+.field label{font-size:15px;font-weight:600;letter-spacing:.02em;color:var(--stein)}
+.spec{background:var(--papier);padding:clamp(24px,3vw,44px);gap:26px}
+.spec .m{font-size:clamp(40px,4.4vw,60px)}
+.rows .r.sum{flex-direction:column;align-items:flex-start;gap:8px}
+.rows .r.sum b{font-size:clamp(40px,4vw,56px)}
+.form .done{background:transparent;padding:0}
+.drop{border-width:1px;min-height:96px}
+.chips span{border-color:var(--linie)}
+
+/* Modelle: nur Jahr und Ort */
+.model{min-height:clamp(380px,38vw,600px)}
+.model figcaption{background:transparent;padding:22px 24px;gap:2px}
+.model::after{display:block;background:linear-gradient(0deg,rgba(13,13,14,.85) 0%,rgba(13,13,14,0) 45%)}
+.model .ki{display:none}
+.ki{display:none}
+
+/* Karten der Gruppe */
+.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}
+.card .pic{height:clamp(260px,30vw,420px)}
+.card .bd{padding:0 0 8px;gap:12px}
+.card .bd .h3{margin-top:14px}
+.card{background:transparent}
+.card .pic::after,.t-gruppe .card .pic::after{display:none}
+
+/* Fußzeile */
+footer{padding:var(--sec) var(--pad) 40px}
+.fgrid{grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+.net{margin-top:72px}
+
+@media (max-width:960px){.cards{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:760px){
+  .hero .h1{font-size:56px}
+  .hero .subh{font-size:30px}
+  .hero .h1.s{font-size:44px}
+  .h2{font-size:40px;hyphens:auto}
+  .big>div{gap:16px;padding:18px 0;font-size:26px}
+  .zahl-gross{font-size:96px}
+  .fgrid{grid-template-columns:minmax(0,1fr)}
+  .hero-txt{padding-bottom:40px}
+  .rows .r.sum b{font-size:32px}
+  .spec .m{font-size:36px}
+  .brass .h2{font-size:36px}
+}
