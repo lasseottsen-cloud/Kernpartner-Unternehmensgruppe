@@ -1,4 +1,4 @@
-/* Kernpartner · Website-Intro für Gruppe, Wärme und Farbe (Stand 18.10.2026)
+/* Kernpartner · Website-Intro für Gruppe, Wärme und Farbe (Stand 23.10.2026, Schrift Archivo)
    Baut die Ebene .kpo über die Seite, schaltet die Phasen und landet auf der echten Bühne.
    Läuft nur, wenn das Skript im <head> html.kpo-on gesetzt hat (einmal pro Besuch,
    nicht bei „Bewegung reduzieren“, nicht bei Sprunglinks). ?intro=1 spielt es erneut. */
@@ -162,8 +162,21 @@
   }
 
   // ---------- Wärme: Modell 1958. ----------
-  var DW = [0.686, 0.524, 0.659, 0.561, 0.632, 0.588, 0.570, 0.629, 0.558, 0.570];
+  // Ziffernbreiten in em (inkl. Laufweite). Startwerte für Archivo 800 mit gleich breiten Ziffern;
+  // measureDigits() misst nach dem Laden der Schrift nach, damit das Zählwerk genau auf der Bühne landet.
+  var DW = [0.67, 0.67, 0.67, 0.67, 0.67, 0.67, 0.67, 0.67, 0.67, 0.67];
   var waEls = {};
+  function measureDigits(cls) {
+    var probe = mk('span', 'fx ' + cls);
+    probe.style.visibility = 'hidden';
+    shake.appendChild(probe);
+    var fs = parseFloat(getComputedStyle(probe).fontSize);
+    for (var i = 0; i < 10; i++) {
+      probe.textContent = new Array(11).join(String(i));
+      if (probe.offsetWidth > 0) DW[i] = probe.offsetWidth / 10 / fs;
+    }
+    shake.removeChild(probe);
+  }
   function odometer(start, target) {
     var s = String(start), t = String(target), diff = start - target, out = '', shrink = 0;
     for (var i = 0; i < 4; i++) {
@@ -182,6 +195,7 @@
     var target = +(bj || ((q('.h1') && (q('.h1').textContent.match(/\d{4}/) || [])[0]) || 1958));
     var start = Math.max(thisYear, target + 1);
     var od = odometer(start, target);
+    waEls.start = start; waEls.target = target;
     var words = ['Ihr', 'Haus', 'ist', 'kein', 'Altbau.'].map(function (w) { return '<span class="w">' + w + '</span>'; }).join(' ') +
       '<br>' + ['Es', 'ist', 'ein'].map(function (w) { return '<span class="w">' + w + '</span>'; }).join(' ');
     var pre = mk('span', 'fx pre', words);
@@ -208,6 +222,11 @@
   }
   function layoutWaerme() {
     var e = waEls;
+    // Zählwerk mit gemessenen Ziffernbreiten neu setzen
+    measureDigits(mobile ? 'yr' : 'h1');
+    var od = odometer(e.start, e.target);
+    if (mobile) e.yr.innerHTML = od.html + '.'; else e.h1.innerHTML = 'Modell ' + od.html + '.';
+    e.shrink = od.shrink;
     if (mobile) {
       center(e.pre, 195, 245.6, 1.25, 1.25);
       center(e.mw, 195, 360.7, 1.391, 2.2);
@@ -276,7 +295,7 @@
     setVars(faEls.h31, { hx: (tx - w.x) / w.k, hy: (ty - w.y) / w.k, hk: String(ks / w.k) });
   }
   function layoutFarbe() {
-    if (mobile) center(faEls.h1, 195, 120, 1.25, 2.2);
+    if (mobile) center(faEls.h1, 195, 120, 1.15, 2.1);
     else center(faEls.h1, 720, 150, 1.25, 2.4);
     faEls.str.style.left = px(-O.x / S); faEls.str.style.width = px(window.innerWidth / S);
     var F;
@@ -350,10 +369,11 @@
       } catch (e) { finish(); }
     };
     if (document.fonts && document.fonts.load) {
-      Promise.all([
-        document.fonts.load("700 88px 'Kernschrift Fuge'"),
-        document.fonts.load("400 30px 'Kernschrift Fuge'")
-      ]).then(go, go);
+      // Gruppe baut das Logo (Kernschrift Fuge), Wärme und Farbe laufen in Archivo wie die Seite
+      var faces = site === 'gruppe'
+        ? ["700 150px 'Kernschrift Fuge'", "400 30px 'Kernschrift Fuge'"]
+        : ["800 88px Archivo", "400 30px Archivo"];
+      Promise.all(faces.map(function (f) { return document.fonts.load(f); })).then(go, go);
     }
     setTimeout(go, 1500);
   } catch (e) {

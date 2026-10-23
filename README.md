@@ -6,9 +6,11 @@ Klickbare Entwürfe der drei Websites – Gruppe, Wärme und Farbe – zum Teste
 
 - `gruppe/`, `waerme/`, `farbe/` – die drei Seiten
 - `rechtliches/` – Platzhalter für Impressum und Datenschutz
-- `assets/` – Stylesheet, Skript, Schriften (Kernschrift Fuge 1.0, IBM Plex unter SIL OFL 1.1), Logos und Bilder
+- `assets/` – Stylesheet, Skript, Schriften, Logos und Bilder
+
+**Schrift:** Archivo (variabel, Breite 100–125 %, Stärke 400–800, SIL OFL 1.1) für alle Texte. Die Hausschrift Kernschrift Fuge steht nur noch im Logo – die Logos sind als Pfade gezeichnet; die Schriftdatei nutzt nur noch das Gruppen-Intro, das das Logo aufbaut.
 
 Statisch, ohne Build-Schritt und ohne Cookies. Formulare zeigen nur eine Bestätigung und senden nichts.
 Inhalte in [Klammern] und alle Fotos sind Platzhalter (KI-Bilder). Suchmaschinen sind per `robots.txt` und `noindex` ausgesperrt.
 
-Stand 17.10.2026
+Stand 23.10.2026

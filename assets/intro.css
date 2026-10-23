@@ -1,4 +1,5 @@
-/* Kernpartner · Website-Intro für Gruppe, Wärme und Farbe (Stand 18.10.2026)
+/* Kernpartner · Website-Intro für Gruppe, Wärme und Farbe (Stand 23.10.2026)
+   Schrift: Archivo wie die Seite. Nur das Gruppen-Intro nutzt Kernschrift Fuge, weil es das Logo aufbaut.
    intro.js baut die Ebene .kpo, schaltet die Phasen p1, p2 … und landet auf der echten Bühne.
    Läuft einmal pro Besuch. Mit ?intro=1 nochmal, mit ?intro=0 nie. Bei „Bewegung reduzieren“ nie. */
 
@@ -6,14 +7,14 @@ html.kpo-on,html.kpo-run,html.kpo-on body,html.kpo-run body{overflow:hidden}
 html.kpo-on::after{content:"";position:fixed;inset:0;z-index:1000;background:#0D0D0E}
 html.kpo-on.kpo-hell::after{background:#F2F0EC}
 
-.kpo{position:fixed;inset:0;z-index:1001;overflow:hidden;background-color:#0D0D0E;color:#F2F0EC;pointer-events:none;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;transition:opacity .3s ease}
+.kpo{position:fixed;inset:0;z-index:1001;overflow:hidden;background-color:#0D0D0E;color:#F2F0EC;pointer-events:none;font-family:var(--sans);-webkit-font-smoothing:antialiased;transition:opacity .3s ease}
 .kpo.fa{background-color:#F2F0EC;color:#141414}
 .kpo *{box-sizing:border-box}
 .kpo.gone{opacity:0}
 .kpo-stage{position:absolute;left:0;top:0;width:1440px;height:900px;transform-origin:0 0}
 .kpo.m .kpo-stage{width:390px;height:844px}
 .kpo-shake{position:absolute;inset:0}
-.kpo-skip{position:absolute;top:16px;right:16px;z-index:5;pointer-events:auto;min-height:44px;padding:0 18px;border:0;border-radius:0;background:rgba(13,13,14,.55);color:#F2F0EC;box-shadow:inset 0 0 0 1.5px #8A877F;font:500 16px/1 'IBM Plex Sans',sans-serif;cursor:pointer;transition:opacity .3s ease}
+.kpo-skip{position:absolute;top:16px;right:16px;z-index:5;pointer-events:auto;min-height:44px;padding:0 18px;border:0;border-radius:0;background:rgba(13,13,14,.55);color:#F2F0EC;box-shadow:inset 0 0 0 1.5px #8A877F;font:600 16px/1 var(--sans);cursor:pointer;transition:opacity .3s ease}
 .kpo.fa .kpo-skip{background:#F2F0EC;color:#141414;box-shadow:inset 0 0 0 1.5px #55534E}
 .kpo-skip:focus-visible{outline:3px solid #0B6BD3;outline-offset:2px}
 .kpo.leave .kpo-skip{opacity:0;pointer-events:none}
@@ -36,8 +37,8 @@ html.kpo-on.kpo-hell::after{background:#F2F0EC}
 .kpo.gr .word{position:absolute;inset:0;transform:scale(2.7);transform-origin:720px 433px;opacity:0}
 .kpo.gr.p1 .word{transform:none;opacity:1;transition:transform .425s cubic-bezier(.55,0,1,.45),opacity .15s linear}
 
-/* Jeder Buchstabe liegt zweimal da: obere und untere Hälfte, getrennt genau an der Fuge (y 450) */
-.kpo.gr .ltr{position:absolute;top:347.56px;font:700 150px/1 'Kernschrift Fuge',sans-serif;color:#F2F0EC;transform-origin:50% 85.5px}
+/* Logo-Schrift: jeder Buchstabe liegt zweimal da, obere und untere Hälfte, getrennt genau an der Fuge (y 450) */
+.kpo.gr .ltr{position:absolute;top:347.56px;font:700 150px/1 var(--logo);color:#F2F0EC;transform-origin:50% 85.5px}
 .kpo.gr .ltr.t{clip-path:inset(-30px -30px 47.56px -30px)}
 .kpo.gr .ltr.b{clip-path:inset(102.44px -30px -40px -30px)}
 .kpo.gr .L0{left:280.65px}.kpo.gr .L1{left:363.45px}.kpo.gr .L2{left:454.95px}.kpo.gr .L3{left:511.2px}.kpo.gr .L4{left:607.05px}
@@ -96,7 +97,7 @@ html.kpo-on.kpo-hell::after{background:#F2F0EC}
 .kpo.gr.p8 .kform{transform:scale(30);transition:transform .688s cubic-bezier(.7,0,.85,.25)}
 .kpo.gr.p9 .kform{opacity:0}
 
-.kpo.gr .ort{position:absolute;font:400 30px/1 'Kernschrift Fuge',sans-serif;color:#E2DFD8;white-space:nowrap;opacity:0;transition:opacity .5s ease}
+.kpo.gr .ort{position:absolute;font:400 30px/1 var(--logo);color:#E2DFD8;white-space:nowrap;opacity:0;transition:opacity .5s ease}
 .kpo.gr.p4 .ort{opacity:1;transition-delay:.775s}
 .kpo.gr.p8 .ort{opacity:0;transition-duration:.188s;transition-delay:0s}
 .kpo.gr .oE{left:507.15px;top:125px}.kpo.gr .oK{left:841.6px;top:362px}.kpo.gr .oP{left:1023.6px;top:538.6px}.kpo.gr .oN{left:595.06px;top:713px}.kpo.gr .oR{left:259.98px;top:387.5px}
@@ -132,7 +133,7 @@ html.kpo-on.kpo-hell::after{background:#F2F0EC}
    Wärme · Modell 1964.
    Satz baut sich auf, „Modell 2026.“ schlägt ein, Zählwerk rollt zurück, Licht an, Landung auf der Bühne
    ========================================================= */
-.kpo.wa .pre{font:400 30px/1.12 'Kernschrift Fuge',sans-serif;color:#E2DFD8;transform:translate(var(--x0),var(--y0)) scale(var(--k0))}
+.kpo.wa .pre{font:400 30px/1.15 var(--sans);color:#E2DFD8;transform:translate(var(--x0),var(--y0)) scale(var(--k0))}
 .kpo.wa.m .pre{font-size:26px}
 .kpo.wa .pre .w{display:inline-block;opacity:0;transform:translateY(.45em);transition:opacity .3s ease,transform .42s cubic-bezier(.2,.7,.2,1)}
 .kpo.wa.p1 .pre .w{opacity:1;transform:none}
@@ -140,17 +141,18 @@ html.kpo-on.kpo-hell::after{background:#F2F0EC}
 .kpo.wa .pre .w:nth-of-type(5){transition-delay:.36s}.kpo.wa .pre .w:nth-of-type(6){transition-delay:.58s}.kpo.wa .pre .w:nth-of-type(7){transition-delay:.67s}.kpo.wa .pre .w:nth-of-type(8){transition-delay:.76s}
 
 .kpo.wa .h1,.kpo.wa .mw,.kpo.wa .yr,.kpo.wa .subh{opacity:0;transform:translate(var(--xs),var(--ys)) scale(var(--ks))}
-.kpo.wa .h1,.kpo.wa .mw,.kpo.wa .yr{font:700 88px/.98 'Kernschrift Fuge',sans-serif;color:#F2F0EC}
+/* gleiche Einstellungen wie .h1 auf der Seite, sonst landet der Text nicht genau */
+.kpo.wa .h1,.kpo.wa .mw,.kpo.wa .yr{font:800 88px/.98 var(--sans);font-stretch:var(--h1-wd);letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:#F2F0EC}
 .kpo.wa.m .mw,.kpo.wa.m .yr{font-size:46px}
 .kpo.wa.p2 .h1,.kpo.wa.p2 .mw,.kpo.wa.p2 .yr{opacity:1;transform:translate(var(--x0),var(--y0)) scale(var(--k0));transition:transform .28s cubic-bezier(.55,0,1,.45),opacity .1s linear}
 .kpo.wa.p2 .yr{transition-delay:.05s}
-.kpo.wa .subh{font:700 40px/1.08 'Kernschrift Fuge',sans-serif;color:#C2533F}
+.kpo.wa .subh{font:700 40px/1.08 var(--sans);font-stretch:var(--d-wd);letter-spacing:var(--d-ls);color:#C2533F}
 .kpo.wa.m .subh{font-size:28px}
 .kpo.wa.p4 .subh{opacity:1;transform:translate(var(--x0),var(--y0)) scale(var(--k0));transition:transform .26s cubic-bezier(.55,0,1,.45) .08s,opacity .1s linear .08s}
 .kpo.wa.p2:not(.p3) .kpo-shake{animation:kpo-shake .45s ease-out .22s}
 .kpo.wa.p4:not(.p5) .kpo-shake{animation:kpo-shake .45s ease-out}
 
-/* Zählwerk: Spalten und Ziffernstreifen baut intro.js für das jeweilige Baujahr */
+/* Zählwerk: Spalten und Ziffernstreifen baut intro.js für das jeweilige Baujahr, Ziffernbreite misst es an der echten Schrift */
 .kpo .odo{display:inline-block;vertical-align:top;height:.98em;white-space:nowrap;transform-origin:50% 50%}
 .kpo .col{display:inline-block;height:.98em;vertical-align:top;text-align:center;clip-path:inset(0 -.3em);width:var(--w0)}
 .kpo .strip{display:block}
@@ -206,7 +208,7 @@ html.kpo-on.kpo-hell::after{background:#F2F0EC}
 .kpo.fa .reihe *{vector-effect:non-scaling-stroke}
 .kpo.fa .hs path,.kpo.fa .hs rect,.kpo.fa .h31 path,.kpo.fa .h31 rect{fill:none;stroke:#141414;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
 .kpo.fa .hs .fein,.kpo.fa .h31 .fein{stroke-width:1.5}
-.kpo.fa .lbl{font:400 16px/1 'IBM Plex Mono',monospace;fill:#55534E;text-anchor:middle;transition:opacity .35s ease}
+.kpo.fa .lbl{font:500 16px/1 var(--sans);font-variant-numeric:tabular-nums;fill:#55534E;text-anchor:middle;transition:opacity .35s ease}
 .kpo.fa .lc{fill:#141414}
 .kpo.fa .hs{transition:transform .6s cubic-bezier(.6,0,.4,1),opacity .45s ease}
 .kpo.fa.p3 .hs.li{transform:translateX(-760px);opacity:0}
@@ -222,7 +224,7 @@ html.kpo-on.kpo-hell::after{background:#F2F0EC}
 .kpo.fa.p6 .h31{opacity:0;transition:opacity 1s ease .4s}
 
 /* „Modell 1931.“ schlägt ein */
-.kpo.fa .h1{font:700 88px/.98 'Kernschrift Fuge',sans-serif;color:#141414;opacity:0;transform:translate(var(--xs),var(--ys)) scale(var(--ks))}
+.kpo.fa .h1{font:800 88px/.98 var(--sans);font-stretch:var(--h1-wd);letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:#141414;opacity:0;transform:translate(var(--xs),var(--ys)) scale(var(--ks))}
 .kpo.fa.m .h1{font-size:46px}
 .kpo.fa.p3 .h1{opacity:1;transform:translate(var(--x0),var(--y0)) scale(var(--k0));transition:transform .28s cubic-bezier(.55,0,1,.45),opacity .1s linear}
 
