@@ -1,0 +1,39 @@
+/* Kernpartner · Variante C · Bild im Ganzen, Schrift als Overlay. Baut auf Variante B auf:
+   gleiche Schrift, Farben, Abschnitte und Logik – nur ohne Verläufe. Die Bühne ist ein bildschirmfüllendes Foto
+   mit gleichmäßigem Abdunkeln (Scrim) und heller Schrift; Bildabschnitte haben harte Kanten. */
+@import url('../../b/assets/b.css');
+
+:root{--scrim:rgba(13,13,14,.44);--scrim-handy:rgba(13,13,14,.52);--acc-foto:var(--ochs-l)}
+.t-farbe{--acc-foto:var(--gruen-h)}
+.t-gruppe{--acc-foto:var(--messing-h);--scrim:rgba(13,13,14,.5)}
+
+/* Bühne: Foto füllt den Bildschirm, Text liegt darauf */
+.hero{min-height:min(960px,calc(100vh - 84px));justify-content:flex-end}
+.hero-bg{background-position:center}
+.hero-bg::before{background:var(--scrim)}
+.hero-bg::after{display:none}
+.hero-txt{color:#F2F0EC;max-width:900px;padding:120px var(--pad) 88px}
+.hero .h1{color:#F2F0EC;text-shadow:0 2px 14px rgba(0,0,0,.28)}
+.hero .subh,.hero .eb{color:var(--acc-foto);text-shadow:0 1px 8px rgba(0,0,0,.28)}
+.hero .lead,.hero .price{color:#F2F0EC;text-shadow:0 1px 6px rgba(0,0,0,.3)}
+.hero .ki-note{color:rgba(242,240,236,.8)}
+.hero .btn.ghost{color:#F2F0EC;box-shadow:inset 0 0 0 2px #F2F0EC}
+.hero .btn.ghost:hover{background:#F2F0EC;color:#141414}
+
+/* Bildabschnitte: harte Kanten statt Verlauf */
+.pic-fade::after,.pic-fade.l::after,.cross .pic::after,.card .pic::after,.t-gruppe .card .pic::after{display:none}
+.model::after{display:none}
+.model figcaption{width:100%;background:rgba(13,13,14,.82);padding:18px 22px}
+.model .ki{top:12px;bottom:auto}
+
+/* Handy: Foto bleibt im Ganzen, Text unten auf dem Foto */
+@media (max-width:760px){
+  .hero{min-height:calc(100vh - 84px);display:flex;flex-direction:column;justify-content:flex-end}
+  .hero-bg{position:absolute;inset:0;height:auto;background-position:62% center}
+  .hero-bg::before{background:var(--scrim-handy)}
+  .hero-txt{margin-top:0;padding:120px var(--pad) 36px;gap:16px}
+}
+@media (max-width:760px) and (max-height:700px){
+  .hero .h1{font-size:50px}
+  .hero .subh{font-size:28px}
+}
