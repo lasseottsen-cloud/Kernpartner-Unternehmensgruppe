@@ -18,8 +18,9 @@
 <a class="sr" href="#main">Zum Inhalt</a>
 
 <header class="nav" id="top">
-<a class="home" href="#top" aria-label="kernpartner gruppe – zum Seitenanfang"><img class="logo" src="../assets/logo/kp-gruppe-linie-dunkel.svg" alt="kernpartner gruppe" width="240" height="40"></a>
-<nav class="links" id="menu" aria-label="Hauptnavigation"><a href="#betriebe">Betriebe</a><a href="#karriere">Karriere</a><a href="#herkunft">Der Name</a><a class="navtel" href="tel:+4943169103713">0431 69103713</a><a class="btn sm" href="#kontakt">Kontakt</a></nav>
+<a class="home" href="#top" aria-label="kernpartner gruppe – zum Seitenanfang"><picture><source media="(max-width:760px)" srcset="../assets/logo/kp-gruppe-dunkel.svg"><img class="logo" src="../assets/logo/kp-gruppe-linie-dunkel.svg" alt="kernpartner gruppe" width="240" height="40"></picture></a>
+<nav class="links" id="menu" aria-label="Hauptnavigation"><a href="#betriebe">Betriebe</a><a href="#karriere">Karriere</a><a href="#herkunft">Der Name</a><a class="navtel" href="tel:+4943169103713">0431 69103713</a><a class="btn sm" href="#kontakt">Nachfolge</a></nav>
+<a class="callbtn" href="tel:+4943169103713" aria-label="Anrufen: 0431 69103713">Anrufen</a>
 <button class="burger" type="button" aria-label="Menü" aria-expanded="false" aria-controls="menu"><i></i><i></i><i></i></button>
 </header>
 
@@ -32,6 +33,7 @@
 <p class="zusatz">Sie brauchen Modellpflege.</p>
 <p class="lead">Handwerksbetriebe für die Häuser, die schon stehen – zwischen Kiel, Eckernförde, Rendsburg, Neumünster und Plön.</p>
 <div class="btns"><a class="btn" href="#betriebe">Unsere Betriebe</a><a class="btn ghost" href="#karriere">Jobs bei uns</a></div>
+<a class="nachfolge-link" href="#kontakt">Ihr Betrieb sucht eine Nachfolge? Sprechen Sie mit uns →</a>
 </div>
 <dl class="daten" aria-label="Die Gruppe">
 <div><dt>Betriebe</dt><dd>Wärme · Farbe</dd></div>
@@ -81,11 +83,10 @@
 </div>
 <div class="vorteile-kopf"><h3>Was du bei uns bekommst.</h3></div>
 <ul class="leist vorteile">
-<li><b>Leistungsgerechte Bezahlung</b><small>Wer gut arbeitet, verdient das auch.</small></li>
-<li><b>30 Tage Urlaub</b><small>Jedes Jahr.</small></li>
-<li><b>Firmenfahrzeug</b><small>Je nach Aufgabe.</small></li>
-<li><b>Firmenkleidung</b><small>Gestellt.</small></li>
-<li><b>Diensthandy und Tablet</b><small>Je nach Aufgabe.</small></li>
+<li><b>Leistungsgerechte Bezahlung</b><small>[Lohn ab … € pro Stunde]</small></li>
+<li><b>30 Tage Urlaub</b></li>
+<li><b>Firmenkleidung</b></li>
+<li><b>Firmenfahrzeug, Diensthandy, Tablet</b><small>Was du für deine Arbeit brauchst, stellen wir.</small></li>
 <li><b>Digitale Abläufe</b><small>Auftrag, Baustelle und Zeiten in einem System. Kein Zettelkram.</small></li>
 </ul>
 </section>
@@ -118,6 +119,11 @@
 <span class="eti acc">Gründen oder übernehmen</span>
 <h2 class="h2" id="h-k" style="margin-bottom:24px">Ihr Betrieb sucht<br>eine Nachfolge?</h2>
 <p class="lead">Oder Sie wollen als Meister einen eigenen Betrieb führen? Sprechen Sie mit uns – vertraulich und persönlich.</p>
+<ol class="schritte-kurz">
+<li><b>1</b><span>Ein vertrauliches Gespräch mit uns beiden.</span></li>
+<li><b>2</b><span>Wir lernen Ihren Betrieb und Ihr Team kennen.</span></li>
+<li><b>3</b><span>Gemeinsam legen wir fest, wie es weitergeht – auch für Sie.</span></li>
+</ol>
 <div class="menschen">
 <figure><img src="../img/lasse-ottsen.jpg" alt="Porträt Lasse Ottsen" width="720" height="720"><figcaption><b>Lasse Ottsen</b><span>Geschäftsführung</span></figcaption></figure>
 <figure><img src="../img/manfred-ottsen.jpg" alt="Porträt Manfred Ottsen" width="720" height="720"><figcaption><b>Manfred Ottsen</b><span>Geschäftsführung</span></figcaption></figure>
@@ -128,8 +134,7 @@
 <form class="form" data-demo>
 <div class="hide-sent">
 <div class="field"><label for="g-name">Name</label><input class="inp" id="g-name" name="g-name" type="text" required autocomplete="name"></div>
-<div class="field"><label for="g-tel">Telefon</label><input class="inp" id="g-tel" name="g-tel" type="tel" autocomplete="tel"></div>
-<div class="field"><label for="g-mail">E-Mail</label><input class="inp" id="g-mail" name="g-mail" type="email" required autocomplete="email"></div>
+<div class="field"><label for="g-kontakt">Telefon oder E-Mail</label><input class="inp" id="g-kontakt" name="g-kontakt" type="text" required autocomplete="tel"></div>
 <div class="field"><label for="g-text">Worum geht es?</label><textarea class="inp" id="g-text" name="g-text" required rows="3"></textarea></div>
 <button class="btn" type="submit">Senden</button>
 <span class="note">Vertraulich. Wir nutzen Ihre Angaben nur für die Antwort.</span>

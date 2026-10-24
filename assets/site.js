@@ -208,7 +208,7 @@
   var eras = document.querySelectorAll('[data-dec]');
   if (eras.length) {
     var PAL = {
-      '1930er': { n: ['Ochsenblutrot', 'Tannengrün', 'Sandweiß', 'Schiefergrau', 'Ocker'], c: ['#7A2E24', '#2F4A3F', '#D8CBB0', '#3C3A36', '#B08A52'], t: 'Ochsenblutrot, Tannengrün und warmes Sandweiß – kräftig an Türen und Fenstern, ruhig an der Wand.' },
+      '1930er': { n: ['Ochsenblutrot', 'Fördegrün', 'Sandweiß', 'Schiefergrau', 'Ocker'], nc: { 1: '#3B6A5A' }, nt: 'Ochsenblutrot, Fördegrün und warmes Sandweiß – kräftig an Türen und Fenstern, ruhig an der Wand.', c: ['#7A2E24', '#2F4A3F', '#D8CBB0', '#3C3A36', '#B08A52'], t: 'Ochsenblutrot, Tannengrün und warmes Sandweiß – kräftig an Türen und Fenstern, ruhig an der Wand.' },
       '1950er': { n: ['Mintgrün', 'Vanille', 'Altrosa', 'Taubenblau', 'Cremeweiß'], c: ['#A9C3B0', '#E8D9A8', '#D9A9A0', '#6F8FA6', '#F1EDE2'], t: 'Pastell und Helle: Mintgrün, Vanille, Altrosa und Taubenblau – freundlich und leicht.' },
       '1970er': { n: ['Orange', 'Schokobraun', 'Senfgelb', 'Olivgrün', 'Sandbeige'], c: ['#B5752A', '#6B4A2E', '#C8A43C', '#7C7F3A', '#E3D3B5'], t: 'Erdtöne: Orange, Schokobraun, Senf und Olive – heute am schönsten sparsam als Akzent.' }
     };
@@ -219,6 +219,7 @@
       pal.innerHTML = '';
       var names = pal.hasAttribute('data-names');
       PAL[k].c.forEach(function (hex, i) {
+        if (names && PAL[k].nc && PAL[k].nc[i]) hex = PAL[k].nc[i];
         var d = document.createElement('div'); d.className = 'c';
         var s = document.createElement('span'); s.style.background = hex;
         d.appendChild(s);
@@ -226,7 +227,7 @@
         var c = document.createElement('code'); c.textContent = hex;
         d.appendChild(c); pal.appendChild(d);
       });
-      txt.textContent = PAL[k].t;
+      txt.textContent = names && PAL[k].nt ? PAL[k].nt : PAL[k].t;
       var f = document.getElementById('a-baujahr-dec');
       if (f) f.value = k;
     };

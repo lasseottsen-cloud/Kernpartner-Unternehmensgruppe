@@ -32,13 +32,20 @@
     put('[data-f-pct]', F.pct + ' %');
     put('[data-f-pct-note]', R.g + ' % Grundförderung' +
       (R.k ? ' + ' + R.k + ' % Klima-Bonus beim Tausch einer alten Öl- oder Gasheizung' : '') +
-      (R.k && R.next ? ', bei Antrag bis ' + KPF.datum(R.bis) + '. Danach ' + (R.next.k ? R.next.k + ' %.' : 'entfällt der Klima-Bonus.')
+      (R.k && R.next ? ', bei Antrag bis ' + KPF.datum(R.bis) + '. Danach ' + (R.next.k ? 'sinkt der Klima-Bonus auf ' + R.next.k + ' %, zusammen ' + (R.g + R.next.k) + ' %.' : 'entfällt der Klima-Bonus.')
                      : '. Stand ' + KPF.datum(heute) + '.'));
     var BSP = 35000, bff = Math.min(BSP, F.ff), bz = Math.round(bff * F.pct / 100);
     put('[data-f-bsp-ff]', KPF.euro(bff));
     put('[data-f-bsp-zl]', 'Zuschuss (' + F.pct + ' %)');
     put('[data-f-bsp-z]', '– ' + KPF.euro(bz));
     put('[data-f-bsp-e]', KPF.euro(BSP - bz));
+  }
+
+  // Wärme: Kurzergebnis direkt unter dem Baujahr (am Handy steht das Datenblatt erst unter dem Formular)
+  var kurz = document.querySelector('[data-f-kurz]'), eig = document.querySelector('[data-s="eigen"]');
+  if (kurz && eig) {
+    var upd = function () { var t = eig.textContent.trim(); kurz.hidden = !t; kurz.textContent = 'Ihr Eigenanteil, Richtwert: ' + t + ' · ganzes Datenblatt ↓'; };
+    new MutationObserver(upd).observe(eig, { childList: true, characterData: true, subtree: true }); upd();
   }
 
   // Wärme: Baujahr in Bühne, Datenblatt und Modellwahl
