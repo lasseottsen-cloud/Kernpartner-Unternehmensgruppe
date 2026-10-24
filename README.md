@@ -12,7 +12,7 @@ Klickbare Entwürfe der drei Websites – Gruppe, Wärme und Farbe – zum Teste
 
 - Wurzel (`gruppe/`, `waerme/`, `farbe/`) – Variante A, erste Fassung
 - `b/` · `c/` · `d/` · `e/` – Varianten B bis E vom 23.10.2026
-- `f/` – Variante F vom 24.10.2026, Reinzeichnung Runde 4: Wortmarke mit Linie ohne Bildzeichen, Gewerk in gesperrten Versalien, Bühne mit Übergang Illustration → Foto. `f/waerme/` (Ochsenblut, Modellwahl 1936 · 1958 · 1974, Datenblatt), `f/farbe/` (Grünspan, Farbkarte nach Jahrzehnt), `f/gruppe/` (Nacht und Messing, Name aus den fünf Orten). Die Illustration wird im Text nicht erwähnt.
+- `f/` – Variante F vom 24.10.2026, Reinzeichnung Runde 4: Wortmarke mit Linie ohne Bildzeichen, Gewerk in gesperrten Versalien, Bühne mit Übergang Illustration → Foto. `f/waerme/` (Ochsenblut, Modellwahl 1936 · 1958 · 1974, Datenblatt), `f/farbe/` (Fördegrün, Farbkarte nach Jahrzehnt), `f/gruppe/` (Nacht und Messing, Name aus den fünf Orten). Die Illustration wird im Text nicht erwähnt.
 
 **Schrift:** Archivo (variabel, Breite 100–125 %, Stärke 400–800, SIL OFL 1.1) für alle Texte. Die Hausschrift Kernschrift Fuge steht nur noch im Logo – die Logos sind als Pfade gezeichnet; die Schriftdatei nutzt nur noch das Gruppen-Intro, das das Logo aufbaut.
 

@@ -42,11 +42,25 @@
   var HEIZ = { oel: 'Ölheizung', gas: 'Gasheizung', strom: 'Nachtspeicher', andere: 'andere Heizung' };
   var EINK = { hoch: ['über 50.000 €', 'über 60.000 €'], e50: ['40.001 – 50.000 €', '50.001 – 60.000 €'], e40: ['30.001 – 40.000 €', '40.001 – 50.000 €'], e30: ['bis 30.000 €', 'bis 40.000 €'] };
   var EINK_P = { hoch: 0, e50: 10, e40: 30, e30: 40 };
-  var KLIMA_BIS = new Date(2027, 0, 31, 23, 59, 59);
-  var FF_MAX = 28000;
+  // Förderung KfW-Zuschuss 458 nach der BEG-Reform vom 21.07.2026, tagesgenau:
+  // Klima-Bonus 16 % bis 31.01.2027, dann je Halbjahr (1.2. / 1.8.) 4 Punkte weniger, ab 01.08.2028 0 %.
+  // Förderfähige Kosten erste Wohneinheit 28.000 €, ab 01.02.2027 je Halbjahr 750 € weniger, ab 01.08.2030 22.000 €.
+  // Grundförderung 30 % (ab 2027 für Wärmepumpen aus EU-Fertigung: 15 % + 15 % Wertschöpfungsbonus).
+  var STUFEN = [{ ab: new Date(2026, 6, 21), k: 16, ff: 28000 }];
+  for (var si = 0; si < 8; si++) STUFEN.push({ ab: new Date(2027 + Math.floor(si / 2), si % 2 ? 7 : 1, 1), k: Math.max(0, 12 - 4 * si), ff: 27250 - 750 * si });
+  var MONATE = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+  var datum = function (d) { return d.getDate() + '. ' + MONATE[d.getMonth()] + ' ' + d.getFullYear(); };
+  function stufe(d) {
+    d = d || new Date();
+    var cur = STUFEN[0], nxt = STUFEN[1];
+    for (var i = 0; i < STUFEN.length; i++) if (d >= STUFEN[i].ab) { cur = STUFEN[i]; nxt = STUFEN[i + 1] || null; }
+    return { g: 30, k: cur.k, ff: cur.ff, next: nxt, bis: nxt ? new Date(nxt.ab.getFullYear(), nxt.ab.getMonth(), nxt.ab.getDate() - 1) : null };
+  }
   var euro = function (n) { return Math.round(n).toLocaleString('de-DE') + ' €'; };
   var span = function (a, b) { return a === b ? euro(a) : euro(a).replace(' €', '') + ' – ' + euro(b); };
   var r500 = function (n) { return Math.round(n / 500) * 500; };
+  // Für die Seiten: Regelfall (selbst bewohnt, alte Öl- oder Gasheizung, Einkommen über der Grenze)
+  window.KPF = { stufe: stufe, datum: datum, euro: euro, regel: function (d) { var r = stufe(d), pct = r.g + r.k; return { r: r, pct: pct, ff: r.ff, z: Math.round(r.ff * pct / 100) }; } };
 
   var check = document.getElementById('check-form');
   var cfg = document.getElementById('cfg');
@@ -104,15 +118,15 @@
     if (st.heiz === 'oel') { lo += 1000; hi += 2000; todo.push('Öltank ausbauen und entsorgen'); }
     if (st.heiz === 'gas') { lo += 300; hi += 800; todo.push('Gasanschluss stilllegen lassen'); }
     lo = r500(lo); hi = r500(hi);
-    var today = new Date();
+    var today = new Date(), st8 = stufe(today);
     var klimaOk = st.selbst && (st.heiz === 'oel' || st.heiz === 'strom' || (st.heiz === 'gas' && st.alter === 'alt'));
-    var g = 30, k = klimaOk && today <= KLIMA_BIS ? 16 : 0, e = st.selbst ? EINK_P[st.eink] : 0;
+    var g = st8.g, k = klimaOk ? st8.k : 0, e = st.selbst ? EINK_P[st.eink] : 0;
     var cap = st.selbst && st.eink === 'e30' ? 80 : 70;
     var pct = Math.min(g + k + e, cap);
-    var ffLo = Math.min(lo, FF_MAX), ffHi = Math.min(hi, FF_MAX);
+    var ffLo = Math.min(lo, st8.ff), ffHi = Math.min(hi, st8.ff);
     var zLo = Math.round(ffLo * pct / 100), zHi = Math.round(ffHi * pct / 100);
     return { era: era, lo: lo, hi: hi, todo: todo, g: g, k: k, e: e, cap: cap, pct: pct, capped: g + k + e > cap, klimaOk: klimaOk,
-      ffLo: ffLo, ffHi: ffHi, zLo: zLo, zHi: zHi, eLo: lo - zLo, eHi: hi - zHi, today: today };
+      ffLo: ffLo, ffHi: ffHi, zLo: zLo, zHi: zHi, eLo: lo - zLo, eHi: hi - zHi, today: today, st: st8 };
   }
 
   var S = function (n) { return cfg ? document.querySelector('[data-s="' + n + '"]') : null; };
@@ -152,10 +166,12 @@
     else if (st.heiz === 'andere') why.push('Klima-Bonus je nach Heizung, zum Beispiel bei Kohle oder Gasetagenheizung. Das prüfen wir beim Termin.');
     if (st.selbst && !c.e) why.push('Einkommens-Bonus nur bis ' + (kind ? '60.000' : '50.000') + ' € zu versteuerndem Haushaltseinkommen.');
     S('why').textContent = why.join(' ');
-    var days = Math.ceil((KLIMA_BIS - c.today) / 864e5);
-    S('clock').textContent = days > 0
-      ? (c.k ? 'Klima-Bonus sichern: Antrag bis 31. Januar 2027 – noch ' + days + ' Tage. Danach sinkt er.' : 'Diese Sätze gelten für Anträge bis 31. Januar 2027 – noch ' + days + ' Tage.')
-      : 'Die Sätze haben sich seit Oktober 2026 geändert. Wir rechnen mit dem Stand am Tag Ihres Antrags.';
+    var nx = c.st.next, bis = c.st.bis;
+    var days = nx ? Math.ceil((nx.ab - c.today) / 864e5) : 0;
+    S('clock').textContent = nx
+      ? (c.k ? 'Klima-Bonus sichern: Antrag bis ' + datum(bis) + ' – noch ' + days + (days === 1 ? ' Tag' : ' Tage') + '. Danach ' + (nx.k ? 'sinkt er auf ' + nx.k + ' %.' : 'entfällt er.')
+             : 'Diese Sätze gelten für Anträge bis ' + datum(bis) + '.')
+      : 'Sätze nach KfW-Zuschuss 458, Stand ' + datum(c.today) + '.';
   }
 
   if (cfg) {
@@ -192,20 +208,23 @@
   var eras = document.querySelectorAll('[data-dec]');
   if (eras.length) {
     var PAL = {
-      '1930er': { c: ['#7A2E24', '#2F4A3F', '#D8CBB0', '#3C3A36', '#B08A52'], t: 'Ochsenblutrot, Tannengrün und warmes Sandweiß – kräftig an Türen und Fenstern, ruhig an der Wand.' },
-      '1950er': { c: ['#A9C3B0', '#E8D9A8', '#D9A9A0', '#6F8FA6', '#F1EDE2'], t: 'Pastell und Helle: Mintgrün, Vanille, Altrosa und Taubenblau – freundlich und leicht.' },
-      '1970er': { c: ['#B5752A', '#6B4A2E', '#C8A43C', '#7C7F3A', '#E3D3B5'], t: 'Erdtöne: Orange, Schokobraun, Senf und Olive – heute am schönsten sparsam als Akzent.' }
+      '1930er': { n: ['Ochsenblutrot', 'Tannengrün', 'Sandweiß', 'Schiefergrau', 'Ocker'], c: ['#7A2E24', '#2F4A3F', '#D8CBB0', '#3C3A36', '#B08A52'], t: 'Ochsenblutrot, Tannengrün und warmes Sandweiß – kräftig an Türen und Fenstern, ruhig an der Wand.' },
+      '1950er': { n: ['Mintgrün', 'Vanille', 'Altrosa', 'Taubenblau', 'Cremeweiß'], c: ['#A9C3B0', '#E8D9A8', '#D9A9A0', '#6F8FA6', '#F1EDE2'], t: 'Pastell und Helle: Mintgrün, Vanille, Altrosa und Taubenblau – freundlich und leicht.' },
+      '1970er': { n: ['Orange', 'Schokobraun', 'Senfgelb', 'Olivgrün', 'Sandbeige'], c: ['#B5752A', '#6B4A2E', '#C8A43C', '#7C7F3A', '#E3D3B5'], t: 'Erdtöne: Orange, Schokobraun, Senf und Olive – heute am schönsten sparsam als Akzent.' }
     };
     var pal = document.getElementById('palette');
     var txt = document.getElementById('era-text');
     var show = function (k) {
       eras.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-dec') === k ? 'true' : 'false'); });
       pal.innerHTML = '';
-      PAL[k].c.forEach(function (hex) {
+      var names = pal.hasAttribute('data-names');
+      PAL[k].c.forEach(function (hex, i) {
         var d = document.createElement('div'); d.className = 'c';
         var s = document.createElement('span'); s.style.background = hex;
+        d.appendChild(s);
+        if (names) { var b = document.createElement('b'); b.textContent = PAL[k].n[i]; d.appendChild(b); }
         var c = document.createElement('code'); c.textContent = hex;
-        d.appendChild(s); d.appendChild(c); pal.appendChild(d);
+        d.appendChild(c); pal.appendChild(d);
       });
       txt.textContent = PAL[k].t;
       var f = document.getElementById('a-baujahr-dec');

@@ -24,6 +24,23 @@
     if (sb) sb.click();
   }
 
+  // Wärme: Förderung in Bühne, 46-%-Block und Rechenbeispiel aus derselben Rechnung wie das Datenblatt (site.js, tagesgenau)
+  if (window.KPF && document.querySelector('[data-f-zuschuss],[data-f-pct]')) {
+    var F = KPF.regel(), R = F.r, heute = new Date();
+    var put = function (sel, t) { document.querySelectorAll(sel).forEach(function (el) { el.textContent = t; }); };
+    put('[data-f-zuschuss]', 'Rund ' + KPF.euro(Math.round(F.z / 500) * 500));
+    put('[data-f-pct]', F.pct + ' %');
+    put('[data-f-pct-note]', R.g + ' % Grundförderung' +
+      (R.k ? ' + ' + R.k + ' % Klima-Bonus beim Tausch einer alten Öl- oder Gasheizung' : '') +
+      (R.k && R.next ? ', bei Antrag bis ' + KPF.datum(R.bis) + '. Danach ' + (R.next.k ? R.next.k + ' %.' : 'entfällt der Klima-Bonus.')
+                     : '. Stand ' + KPF.datum(heute) + '.'));
+    var BSP = 35000, bff = Math.min(BSP, F.ff), bz = Math.round(bff * F.pct / 100);
+    put('[data-f-bsp-ff]', KPF.euro(bff));
+    put('[data-f-bsp-zl]', 'Zuschuss (' + F.pct + ' %)');
+    put('[data-f-bsp-z]', '– ' + KPF.euro(bz));
+    put('[data-f-bsp-e]', KPF.euro(BSP - bz));
+  }
+
   // Wärme: Baujahr in Bühne, Datenblatt und Modellwahl
   var cj = document.getElementById('c-jahr');
   if (cj) {
