@@ -396,3 +396,5 @@ select.inp{appearance:auto}
   .palette .c{grid-template-columns:64px 1fr auto;gap:14px}
   .palette .c span{height:44px}
 }
+.frei{font-size:17px;color:var(--stein)}
+.frei-z{font-size:17px;font-weight:600;color:var(--tinte);margin-top:-4px}
