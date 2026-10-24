@@ -327,6 +327,7 @@ select.inp{appearance:auto}
 }
 @media (max-width:760px){
   .t-farbe .hero-img{background-position:60% center}
+  .t-farbe .meister{background-image:none}
   .t-gruppe .hero-img{background-position:34% center}
   .t-gruppe .hero-img::before{display:none}
   .t-gruppe .nav.open .links{background:var(--nacht)}
